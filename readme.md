@@ -141,7 +141,7 @@ Get Keys:
 2. **Install Python 3.10+.**
 3. **Install dependencies**:
    ```bash
-   pip install requests python-dotenv
+   pip install -r requirements.txt
    ```
 4. **Create `.env` in root**:
    ```
