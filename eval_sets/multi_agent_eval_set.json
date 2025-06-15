@@ -1,0 +1,109 @@
+{
+  "eval_version": "1.0.0",
+  "eval_description": "Evaluation tests for the multi-agent system using Google ADK to verify agent chaining, data enrichment, planner routing logic, iterative refinement, and goal satisfaction.",
+  "test_cases": [
+    {
+      "test_id": "TC001",
+      "description": "Verify system handles goal: Find next SpaceX launch, check weather, and summarize delay likelihood",
+      "data": {
+        "input": {
+          "user_goal": "Find the next SpaceX launch, check weather at that location, then summarize if it may be delayed"
+        },
+        "expected_behavior": {
+          "agent_sequence": ["spacex_agent", "weather_agent", "manager_agent"],
+          "spacex_agent_output": {
+            "required_fields": ["launch_date", "location", "region", "status"],
+            "status": "success",
+            "location_format": "string",
+            "region_format": "string",
+            "launch_date_format": "ISO8601"
+          },
+          "weather_agent_output": {
+            "required_fields": ["conditions", "temp_c"],
+            "status": "success",
+            "temp_c_format": "float",
+            "conditions_format": "object"
+          },
+          "manager_agent_output": {
+            "required_fields": ["summary", "delay_likelihood"],
+            "delay_likelihood_values": ["low", "medium", "high"],
+            "summary_contains": ["launch date", "location", "weather", "delay assessment"]
+          }
+        },
+        "success_criteria": {
+          "goal_satisfied": "System produces a summary with launch date, location, weather conditions, and delay likelihood",
+          "chaining": "SpaceX agent output (location) is used by weather agent, and weather agent output is used by manager agent for summary",
+          "retries": "System retries on API failure (e.g., SpaceX API timeout) up to 3 times",
+          "response_time": "Total execution time < 10 seconds"
+        }
+      }
+    },
+    {
+      "test_id": "TC002",
+      "description": "Verify system handles goal: Find Bitcoin price, fetch related news, and summarize market sentiment",
+      "data": {
+        "input": {
+          "user_goal": "Find the current Bitcoin price, fetch related news, and summarize market sentiment"
+        },
+        "expected_behavior": {
+          "agent_sequence": ["coingecko_agent", "newsapi_agent", "manager_agent"],
+          "coingecko_agent_output": {
+            "required_fields": ["coin_id", "price_usd", "market_change_24h", "status"],
+            "status": "success",
+            "coin_id": "bitcoin",
+            "price_usd_format": "float",
+            "market_change_24h_format": "float"
+          },
+          "newsapi_agent_output": {
+            "required_fields": ["get_news_response"],
+            "get_news_response_contains": ["title", "description", "source"],
+            "status": "success"
+          },
+          "manager_agent_output": {
+            "required_fields": ["summary", "sentiment"],
+            "sentiment_values": ["positive", "negative", "neutral"],
+            "summary_contains": ["Bitcoin price", "market change", "news summary", "sentiment"]
+          }
+        },
+        "success_criteria": {
+          "goal_satisfied": "System produces a summary with Bitcoin price, market change, news insights, and market sentiment",
+          "chaining": "CoinGecko agent output (coin_id) is used by newsapi_agent, and newsapi_agent output is used by manager_agent for sentiment analysis",
+          "retries": "System retries on API failure (e.g., NewsAPI rate limit) up to 3 times",
+          "response_time": "Total execution time < 10 seconds"
+        }
+      }
+    },
+    {
+      "test_id": "TC003",
+      "description": "Verify system handles failure: SpaceX API returns no upcoming launches",
+      "data": {
+        "input": {
+          "user_goal": "Find the next SpaceX launch, check weather at that location, then summarize if it may be delayed"
+        },
+        "mock_conditions": {
+          "spacex_agent": {
+            "status": "failure",
+            "error": "No upcoming launches found"
+          }
+        },
+        "expected_behavior": {
+          "agent_sequence": ["spacex_agent", "manager_agent"],
+          "spacex_agent_output": {
+            "status": "failure",
+            "error_contains": "No upcoming launches"
+          },
+          "manager_agent_output": {
+            "required_fields": ["error_message"],
+            "error_message_contains": ["No upcoming SpaceX launches", "try again later"]
+          }
+        },
+        "success_criteria": {
+          "goal_satisfied": "System gracefully handles failure and informs user of no upcoming launches",
+          "chaining": "Manager agent processes spacex_agent failure and stops pipeline",
+          "retries": "System retries SpaceX API call up to 3 times before failing",
+          "response_time": "Total execution time < 5 seconds"
+        }
+      }
+    }
+  ]
+}

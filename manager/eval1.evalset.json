@@ -1,0 +1,106 @@
+{
+  "eval_set_id": "eval1",
+  "name": "eval1",
+  "description": null,
+  "eval_cases": [
+    {
+      "eval_id": "multiagenttest",
+      "conversation": [
+        {
+          "invocation_id": "e-7f6ecca0-28dd-4162-96a4-7d0630c8951a",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_call": null,
+                "function_response": null,
+                "text": "Find the next SpaceX launch, check weather at that location, then summarize if it may be delayed.\n"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_call": null,
+                "function_response": null,
+                "text": "Okay, the weather in Cape Canaveral, Florida on November 1, 2022, at 13:41:00 UTC is partly cloudy with a temperature of 29.7�C (85.5�F), humidity of 72%, and wind speed of 13.3 kph. Based on this information, it doesn't seem like the launch would be delayed due to weather conditions.\n"
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "adk-c75a68b5-d445-48a4-bcc6-5f09a4e55195",
+                "args": {
+                  "agent_name": "spacex_agent"
+                },
+                "name": "transfer_to_agent"
+              },
+              {
+                "id": "adk-76a4e15a-3591-4974-b98d-34ebece78425",
+                "args": {},
+                "name": "get_next_spacex_launch"
+              },
+              {
+                "id": "adk-09f6f956-7b4c-4d59-b96a-db43c56f518e",
+                "args": {
+                  "agent_name": "weather_agent"
+                },
+                "name": "transfer_to_agent"
+              },
+              {
+                "id": "adk-fcaaff15-1309-4bfd-bf19-f57e52360119",
+                "args": {
+                  "location": "Cape Canaveral, Florida"
+                },
+                "name": "get_current_weather"
+              }
+            ],
+            "intermediate_responses": [
+              [
+                "spacex_agent",
+                [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "inline_data": null,
+                    "file_data": null,
+                    "thought_signature": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "text": "Okay, the next SpaceX launch is scheduled for November 1, 2022, at 13:41:00 UTC from Cape Canaveral, Florida. Now I need to check the weather there and then summarize if the launch might be delayed.\n\n"
+                  }
+                ]
+              ]
+            ]
+          },
+          "creation_timestamp": 1750005231.803794
+        }
+      ],
+      "session_input": {
+        "app_name": "manager",
+        "user_id": "user",
+        "state": {}
+      },
+      "creation_timestamp": 1750005341.432706
+    }
+  ],
+  "creation_timestamp": 1750005218.447763
+}

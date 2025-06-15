@@ -1,4 +1,4 @@
-from google.adk.agents import Agent
+from google.adk.agents import LlmAgent
 from .sub_agents.spacex_agent.agent import spacex_agent
 from .sub_agents.weather_agent.agent import weather_agent
 from .sub_agents.newsapi_agent.agent import news_agent
@@ -6,7 +6,7 @@ from .sub_agents.coingecko_agent.agent import coingecko_agent
 
 
 
-root_agent = Agent(
+root_agent = LlmAgent(
     name="manager",
     model="gemini-2.0-flash",
     description='Manager Agent',

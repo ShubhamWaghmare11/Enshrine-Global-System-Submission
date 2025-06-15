@@ -1,0 +1,35 @@
+{
+  "test_results": [
+    {
+      "test_id": "TC001",
+      "tool_trajectory_score": 0.0,
+      "response_match_score": 0.0,
+      "passed": false,
+      "details": [
+        "Error: Agent run failed: Aborted!"
+      ]
+    },
+    {
+      "test_id": "TC002",
+      "tool_trajectory_score": 0.0,
+      "response_match_score": 0.0,
+      "passed": false,
+      "details": [
+        "Error: Agent run failed: Aborted!"
+      ]
+    },
+    {
+      "test_id": "TC003",
+      "tool_trajectory_score": 0.0,
+      "response_match_score": 0.0,
+      "passed": false,
+      "details": [
+        "Error: Agent run failed: Aborted!"
+      ]
+    }
+  ],
+  "averages": {
+    "tool_trajectory_avg_score": 0.0,
+    "response_match_score": 0.0
+  }
+}
