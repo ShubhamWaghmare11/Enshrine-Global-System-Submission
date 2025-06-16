@@ -169,7 +169,7 @@ manager_agent("Find the next SpaceX launch, check weather, summarize if it may b
 
 ### Run evaluations:
 ```bash
-python eval.py
+python -m pytest evaluate.py
 ```
 
 ---

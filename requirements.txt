@@ -1,2 +1,8 @@
+google-adk
 google-adk[database]
+google-adk[evaluate]
 python-dotenv
+pytest
+google-cloud-aiplatform[evaluation]
+pandas
+tabulate
